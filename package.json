@@ -1,9 +1,9 @@
 {
-    "name": "typescript-express-boilerplate",
+    "name": "shop",
     "version": "0.0.1",
-    "description": "A helpful description.",
-    "main": "dist/index.js",
-    "repository": "git@github.com:olvrb/typescript-express-boilerplate.git",
+    "description": "Some shop backend thing.",
+    "main": "dist/Index.js",
+    "repository": "git@github.com:olvrb/shop.git",
     "author": "Oliver Boudet <oboudet1@me.com>",
     "license": "GPL-3.0",
     "scripts": {
@@ -17,7 +17,8 @@
     "dependencies": {
         "@types/express": "^4.16.0",
         "pg": "^7.4.3",
-        "typeorm": "^0.2.7"
+        "typeorm": "^0.2.7",
+        "winston": "^3.1.0"
     },
     "devDependencies": {
         "prettier": "^1.14.3",

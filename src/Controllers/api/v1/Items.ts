@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { Item } from "../../../Database/Entities/Item";
-export async function CreateItemHandler(
+export async function ItemHandler(
     req: Request,
     res: Response,
     next: NextFunction
