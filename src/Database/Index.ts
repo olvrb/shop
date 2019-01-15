@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import { createConnection } from "typeorm";
 
-import { Configuration } from "../Config";
+import { Configuration } from "@config";
 import { join } from "path";
 
 export function connect() {

@@ -1,7 +1,9 @@
+// tslint:disable-next-line
+require("module-alias/register");
 import express from "express";
 import { json, urlencoded } from "body-parser";
 import { join } from "path";
-import { Configuration } from "./Config";
+import { Configuration } from "@config";
 import { connect } from "./Database/Index";
 import { BindControllers } from "./Controllers/Index";
 import { BindMiddleware } from "./Middleware/Index";

@@ -1,7 +1,7 @@
 import { app } from "../Index";
-import { ItemHandler } from "./api/v1/Items";
-import { CreateItemHandler } from "./api/v1/item/CreateItem";
-import { CreateCategoryHandler } from "./api/v1/category/CreateCategory";
+import { ItemHandler } from "./api/v1/items";
+import { CreateItemHandler } from "./api/v1/items/create";
+import { CreateCategoryHandler } from "./api/v1/categories/create";
 import { Logger } from "../Utilities/Logger";
 
 export function BindControllers() {
