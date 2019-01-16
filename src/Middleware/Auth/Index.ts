@@ -1,16 +1,24 @@
-import { Request, Response, NextFunction } from "express";
-import { Logger } from "../../Utilities/Logger";
-import session from "express-session";
-import uuid from "uuid/v4";
-import { Configuration } from "@config";
-import { Db } from "typeorm-static";
-import { TypeormStore, SessionEntity } from "typeorm-store";
-import { Session } from "@entities/Session";
-import { getConnection } from "typeorm";
+import { User } from "@entities/User";
+import { Logger } from "@utilities/Logger";
+import { NextFunction, Request, Response } from "express";
+import passport from "passport";
+import { Strategy as LocalStrategy } from "passport-local";
+
 export async function AuthMiddleware(
     req: Request,
     res: Response,
     next: NextFunction
 ) {
-    return;
+    passport.use(
+        new LocalStrategy({ usernameField: "email" }, User.Authenticate)
+    );
+    passport.serializeUser((user: any, done) => {
+        Logger.debug("Serializing user...");
+        done(null, user.id);
+    });
+    passport.deserializeUser(async (id, done) => {
+        Logger.debug("Deserializing user...");
+        done(null, await User.findOne({ where: { Id: id } }));
+    });
+    next();
 }

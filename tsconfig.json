@@ -35,7 +35,8 @@
         "strictPropertyInitialization": false,
         "paths": {
             "@config": ["Config.ts"],
-            "@entities/*": ["Database/Entities/*"]
+            "@entities/*": ["Database/Entities/*"],
+            "@utilities/*": ["Utilities/*"]
         },
         "baseUrl": "src"
     },

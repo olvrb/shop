@@ -1,29 +1,42 @@
-import { NextFunction, Request, Response } from "express";
+import { Configuration } from "@config";
+import { Session } from "@entities/Session";
+import { json, urlencoded } from "body-parser";
+import express from "express";
 import session from "express-session";
+import passport = require("passport");
+import { join } from "path";
+import { getConnection, Repository } from "typeorm";
+import { SessionEntity, TypeormStore } from "typeorm-store";
 import uuid from "uuid/v4";
 
 import { app } from "../Index";
 import { Logger } from "../Utilities/Logger";
-import { LoggerMiddleware } from "./Logger/Index";
-import { Configuration } from "@config";
 import { AuthMiddleware } from "./Auth/Index";
-import { Db } from "typeorm-static";
-import { TypeormStore, SessionEntity } from "typeorm-store";
-import { Session } from "@entities/Session";
-import { getConnection } from "typeorm";
+import { LoggerMiddleware } from "./Logger/Index";
+
 export function BindMiddleware() {
     Logger.info("Binding middleware.");
 
     app.use(LoggerMiddleware);
     app.use(
         session({
-            genid: () => {
-                return uuid();
-            },
+            genid: () => uuid(),
             secret: Configuration.Web.Secret,
             resave: true,
+            store: new TypeormStore({
+                // wtf typescript
+                repository: (getConnection().getRepository(
+                    Session
+                ) as unknown) as Repository<SessionEntity>
+            }),
             saveUninitialized: true,
             cookie: { httpOnly: false }
         })
     );
+    app.use(json()); // for parsing application/json
+    app.use(urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+    app.use(express.static(join(__dirname, "../public")));
+    app.use(AuthMiddleware);
+    app.use(passport.initialize());
+    app.use(passport.session());
 }

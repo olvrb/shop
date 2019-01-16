@@ -7,21 +7,18 @@ import { Configuration } from "@config";
 import { connect } from "./Database/Index";
 import { BindControllers } from "./Controllers/Index";
 import { BindMiddleware } from "./Middleware/Index";
+import passport = require("passport");
 const app = express();
 
 app.set("view engine", "ejs");
 app.set("views", join(__dirname, "../views"));
-app.use(json()); // for parsing application/json
-app.use(urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-app.use(express.static(join(__dirname, "../public")));
-
-// Routes
-BindMiddleware();
-BindControllers();
 
 const port = Configuration.Web.Port;
 connect()
     .then(() => {
+        // Routes
+        BindMiddleware();
+        BindControllers();
         app.listen(port, () => {
             console.log(`Listening on port ${port}: http://localhost:${port}`);
         });
